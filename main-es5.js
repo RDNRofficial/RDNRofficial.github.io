@@ -704,7 +704,7 @@
         _classCallCheck(this, AppSettings);
       };
 
-      AppSettings.baseURL = "http://bitschi.hopto.org:8000/";
+      AppSettings.baseURL = "https://bitschi.hopto.org/";
       /***/
     },
 
@@ -4370,11 +4370,6 @@
           value: function logout() {
             this.authService.logout();
           }
-        }, {
-          key: "showInformation",
-          value: function showInformation() {
-            console.log("Test");
-          }
         }]);
 
         return DashboardComponent;
@@ -6364,7 +6359,6 @@
             if (!this.studywrapper.study) {
               this.router.navigate(["dashboard"]);
             } else {
-              console.log(this.studywrapper.study);
               this.savingInterval = setInterval(function () {
                 if (_this27.studywrapper.study) {
                   _this27.save();
@@ -6406,11 +6400,6 @@
                 }
               }, _callee41, this);
             }));
-          }
-        }, {
-          key: "showInformation",
-          value: function showInformation() {
-            console.log("Test");
           }
         }]);
 

@@ -388,7 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppSettings", function() { return AppSettings; });
 class AppSettings {
 }
-AppSettings.baseURL = "http://bitschi.hopto.org:8000/";
+AppSettings.baseURL = "https://bitschi.hopto.org/";
 
 
 /***/ }),
@@ -2362,9 +2362,6 @@ let DashboardComponent = class DashboardComponent {
     logout() {
         this.authService.logout();
     }
-    showInformation() {
-        console.log("Test");
-    }
 };
 DashboardComponent.ctorParameters = () => [
     { type: _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__["StudyWrapperService"] },
@@ -3503,7 +3500,6 @@ let StudyCreationComponent = class StudyCreationComponent {
             this.router.navigate(["dashboard"]);
         }
         else {
-            console.log(this.studywrapper.study);
             this.savingInterval = setInterval(() => {
                 if (this.studywrapper.study) {
                     this.save();
@@ -3527,9 +3523,6 @@ let StudyCreationComponent = class StudyCreationComponent {
                 });
             }
         });
-    }
-    showInformation() {
-        console.log("Test");
     }
 };
 StudyCreationComponent.ctorParameters = () => [
