@@ -704,7 +704,7 @@
         _classCallCheck(this, AppSettings);
       };
 
-      AppSettings.baseURL = "https://bitschi.hopto.org"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+      AppSettings.baseURL = "https://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
       /***/
     },
