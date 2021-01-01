@@ -127,12 +127,12 @@
          * einfließen, z.B. ist eine Einführungs-Section mit einem Tutorial, um sich mit der Umgebung
          * vertraut zu machen, nicht von Bedeutung
          */
-        function Section(id, name, skippable, resultRelevant, randomStrategy) {
+        function Section(id, name, displayName, skippable, resultRelevant, randomStrategy) {
           var _this;
 
           _classCallCheck(this, Section);
 
-          _this = _super.call(this, id, name);
+          _this = _super.call(this, id, name, displayName);
           /**
            * In dem Attribut sind mittels ID Referenzen auf jene Elemente gespeichert, die innerhalb einer Section liegen.
            */
@@ -305,12 +305,12 @@
          * @param fixed entscheidet, ob der TextBlock innerhalb eines Section-Elements eine feste Position hat oder die
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
-        function TextBlock(id, name, text) {
+        function TextBlock(id, name, displayName, text) {
           var _this2;
 
           _classCallCheck(this, TextBlock);
 
-          _this2 = _super2.call(this, id, name);
+          _this2 = _super2.call(this, id, name, displayName);
           _this2.objectType = "TextBlock";
           _this2.text = text;
           return _this2;
@@ -704,7 +704,8 @@
         _classCallCheck(this, AppSettings);
       };
 
-      AppSettings.baseURL = "https://bitschi.hopto.org/";
+      AppSettings.baseURL = "https://bitschi.hopto.org"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+
       /***/
     },
 
@@ -3114,12 +3115,12 @@
          * @param fixed entscheidet, ob das Section-Element eine feste Position in einer Section hat oder die
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
-        function SectionElement(id, name, randomStrategy, studyObjects, verifier) {
+        function SectionElement(id, name, displayName, randomStrategy, studyObjects, verifier) {
           var _this23;
 
           _classCallCheck(this, SectionElement);
 
-          _this23 = _super4.call(this, id, name);
+          _this23 = _super4.call(this, id, name, displayName);
           /**
            * Das Attribut gibt an, ob ein SectionElement für den Studienteilnehmer überspringbar sein soll.
            */
@@ -4183,7 +4184,7 @@
          * @param fixed entscheidet, ob das Studienobjekt innerhalb eines Section-Elements eine feste Position hat oder die
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
-        function AbstractStudyObject(id, name) {
+        function AbstractStudyObject(id, name, displayName) {
           _classCallCheck(this, AbstractStudyObject);
 
           if (id == null) {
@@ -4192,6 +4193,7 @@
 
           this._id = id;
           this._name = name;
+          this._displayName = displayName;
         }
 
         _createClass(AbstractStudyObject, [{
@@ -4213,6 +4215,14 @@
           },
           set: function set(name) {
             this._name = name;
+          }
+        }, {
+          key: "displayName",
+          get: function get() {
+            return this._displayName;
+          },
+          set: function set(displayName) {
+            this._displayName = displayName;
           }
         }]);
 
@@ -7007,7 +7017,7 @@
                               _iterator12.f();
                             }
 
-                            var _toInsert = new _StudyObjects_Section__WEBPACK_IMPORTED_MODULE_7__["Section"](section.id, section.name, section.skippable, section.resultRelevant, section.randomStrategy);
+                            var _toInsert = new _StudyObjects_Section__WEBPACK_IMPORTED_MODULE_7__["Section"](section.id, section.name, section.displayName, section.skippable, section.resultRelevant, section.randomStrategy);
 
                             _toInsert.sectionElements = refArray;
                             sections.push(_toInsert);
@@ -7044,7 +7054,7 @@
                               _iterator13.f();
                             }
 
-                            sectionElements.push(new _StudyObjects_SectionElement__WEBPACK_IMPORTED_MODULE_6__["SectionElement"](sectionElement.id, sectionElement.name, sectionElement.randomStrategy, _refArray));
+                            sectionElements.push(new _StudyObjects_SectionElement__WEBPACK_IMPORTED_MODULE_6__["SectionElement"](sectionElement.id, sectionElement.name, sectionElement.displayName, sectionElement.randomStrategy, _refArray));
                           }
                         } catch (err) {
                           _iterator10.e(err);
@@ -7065,7 +7075,7 @@
                             switch (studyObject.studyObjectTypes) {
                               case 3:
                                 // TEXTBLOCK
-                                studyObjects.push(new _StudyObjects_TextBlock__WEBPACK_IMPORTED_MODULE_14__["TextBlock"](studyObject.id, studyObject.name, studyObject.text));
+                                studyObjects.push(new _StudyObjects_TextBlock__WEBPACK_IMPORTED_MODULE_14__["TextBlock"](studyObject.id, studyObject.name, studyObject.displayName, studyObject.text));
                                 break;
 
                               case 4:
@@ -7117,7 +7127,7 @@
                                   _iterator14.f();
                                 }
 
-                                var vibElement = new _StudyObjects_VibrationPattern__WEBPACK_IMPORTED_MODULE_16__["VibrationPattern"](studyObject.id, studyObject.name);
+                                var vibElement = new _StudyObjects_VibrationPattern__WEBPACK_IMPORTED_MODULE_16__["VibrationPattern"](studyObject.id, studyObject.name, studyObject.displayName);
                                 vibElement.vibrationPatternElements = vibrationElements;
                                 studyObjects.push(vibElement);
                                 break;
@@ -8020,12 +8030,12 @@
          * @param fixed entscheidet, ob das VibrationPattern innerhalb eines Section-Elements eine feste Position hat oder die
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
-        function VibrationPattern(id, name) {
+        function VibrationPattern(id, name, displayName) {
           var _this32;
 
           _classCallCheck(this, VibrationPattern);
 
-          _this32 = _super11.call(this, id, name);
+          _this32 = _super11.call(this, id, name, displayName);
           _this32.objectType = "VibrationPattern";
           _this32.vibrationPatternElements = [];
           return _this32;
@@ -8817,8 +8827,7 @@
 
           _classCallCheck(this, AbstractQuestion);
 
-          _this34 = _super12.call(this, id, name);
-          _this34._displayName = "";
+          _this34 = _super12.call(this, id, name, displayName);
           _this34._questionText = "";
           _this34.questionText = questionText;
           _this34._answer = undefined;
@@ -8827,14 +8836,6 @@
         }
 
         _createClass(AbstractQuestion, [{
-          key: "displayName",
-          get: function get() {
-            return this._displayName;
-          },
-          set: function set(displayName) {
-            this._displayName = displayName;
-          }
-        }, {
           key: "questionText",
           get: function get() {
             return this._questionText;

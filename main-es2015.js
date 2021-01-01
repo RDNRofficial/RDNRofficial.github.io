@@ -56,8 +56,8 @@ class Section extends _AbstractStudyObject__WEBPACK_IMPORTED_MODULE_1__["Abstrac
      * einfließen, z.B. ist eine Einführungs-Section mit einem Tutorial, um sich mit der Umgebung
      * vertraut zu machen, nicht von Bedeutung
      */
-    constructor(id, name, skippable, resultRelevant, randomStrategy) {
-        super(id, name);
+    constructor(id, name, displayName, skippable, resultRelevant, randomStrategy) {
+        super(id, name, displayName);
         /**
          * In dem Attribut sind mittels ID Referenzen auf jene Elemente gespeichert, die innerhalb einer Section liegen.
          */
@@ -177,8 +177,8 @@ class TextBlock extends _AbstractStudyObject__WEBPACK_IMPORTED_MODULE_0__["Abstr
      * @param fixed entscheidet, ob der TextBlock innerhalb eines Section-Elements eine feste Position hat oder die
      * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
      */
-    constructor(id, name, text) {
-        super(id, name);
+    constructor(id, name, displayName, text) {
+        super(id, name, displayName);
         this.objectType = "TextBlock";
         this.text = text;
     }
@@ -388,7 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppSettings", function() { return AppSettings; });
 class AppSettings {
 }
-AppSettings.baseURL = "https://bitschi.hopto.org/";
+AppSettings.baseURL = "https://bitschi.hopto.org"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
 
 /***/ }),
@@ -1640,8 +1640,8 @@ class SectionElement extends _AbstractStudyObject__WEBPACK_IMPORTED_MODULE_0__["
      * @param fixed entscheidet, ob das Section-Element eine feste Position in einer Section hat oder die
      * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
      */
-    constructor(id, name, randomStrategy, studyObjects, verifier) {
-        super(id, name);
+    constructor(id, name, displayName, randomStrategy, studyObjects, verifier) {
+        super(id, name, displayName);
         /**
          * Das Attribut gibt an, ob ein SectionElement für den Studienteilnehmer überspringbar sein soll.
          */
@@ -2269,12 +2269,13 @@ class AbstractStudyObject {
      * @param fixed entscheidet, ob das Studienobjekt innerhalb eines Section-Elements eine feste Position hat oder die
      * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
      */
-    constructor(id, name) {
+    constructor(id, name, displayName) {
         if (id == null) {
             throw new Error("Id darf nicht null sein.");
         }
         this._id = id;
         this._name = name;
+        this._displayName = displayName;
     }
     get id() {
         return this._id;
@@ -2290,6 +2291,12 @@ class AbstractStudyObject {
     }
     set name(name) {
         this._name = name;
+    }
+    get displayName() {
+        return this._displayName;
+    }
+    set displayName(displayName) {
+        this._displayName = displayName;
     }
 }
 
@@ -3818,7 +3825,7 @@ let StudyPrototypeDAO = class StudyPrototypeDAO {
                     for (let ref of section.sectionElements) {
                         refArray.push(new _ReferenceTuple__WEBPACK_IMPORTED_MODULE_5__["ReferenceTuple"](ref.ID, ref.isFixed));
                     }
-                    let toInsert = new _StudyObjects_Section__WEBPACK_IMPORTED_MODULE_7__["Section"](section.id, section.name, section.skippable, section.resultRelevant, section.randomStrategy);
+                    let toInsert = new _StudyObjects_Section__WEBPACK_IMPORTED_MODULE_7__["Section"](section.id, section.name, section.displayName, section.skippable, section.resultRelevant, section.randomStrategy);
                     toInsert.sectionElements = refArray;
                     sections.push(toInsert);
                 }
@@ -3829,14 +3836,14 @@ let StudyPrototypeDAO = class StudyPrototypeDAO {
                     for (let ref of sectionElement.studyObjects) {
                         refArray.push(new _ReferenceTuple__WEBPACK_IMPORTED_MODULE_5__["ReferenceTuple"](ref.ID, ref.isFixed));
                     }
-                    sectionElements.push(new _StudyObjects_SectionElement__WEBPACK_IMPORTED_MODULE_6__["SectionElement"](sectionElement.id, sectionElement.name, sectionElement.randomStrategy, refArray));
+                    sectionElements.push(new _StudyObjects_SectionElement__WEBPACK_IMPORTED_MODULE_6__["SectionElement"](sectionElement.id, sectionElement.name, sectionElement.displayName, sectionElement.randomStrategy, refArray));
                 }
                 study.sectionElements = sectionElements;
                 let studyObjects = [];
                 for (let studyObject of studyResult.studyObjects) {
                     switch (studyObject.studyObjectTypes) {
                         case 3: // TEXTBLOCK
-                            studyObjects.push(new _StudyObjects_TextBlock__WEBPACK_IMPORTED_MODULE_14__["TextBlock"](studyObject.id, studyObject.name, studyObject.text));
+                            studyObjects.push(new _StudyObjects_TextBlock__WEBPACK_IMPORTED_MODULE_14__["TextBlock"](studyObject.id, studyObject.name, studyObject.displayName, studyObject.text));
                             break;
                         case 4: // QUESTION
                             switch (studyObject.questionType) {
@@ -3864,7 +3871,7 @@ let StudyPrototypeDAO = class StudyPrototypeDAO {
                                     vibrationElements.push(new _StudyObjects_VibrationElement__WEBPACK_IMPORTED_MODULE_15__["VibrationElement"](vibElement.duration, vibElement.amplitude));
                                 }
                             }
-                            let vibElement = new _StudyObjects_VibrationPattern__WEBPACK_IMPORTED_MODULE_16__["VibrationPattern"](studyObject.id, studyObject.name);
+                            let vibElement = new _StudyObjects_VibrationPattern__WEBPACK_IMPORTED_MODULE_16__["VibrationPattern"](studyObject.id, studyObject.name, studyObject.displayName);
                             vibElement.vibrationPatternElements = vibrationElements;
                             studyObjects.push(vibElement);
                             break;
@@ -4427,8 +4434,8 @@ class VibrationPattern extends _AbstractStudyObject__WEBPACK_IMPORTED_MODULE_0__
      * @param fixed entscheidet, ob das VibrationPattern innerhalb eines Section-Elements eine feste Position hat oder die
      * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
      */
-    constructor(id, name) {
-        super(id, name);
+    constructor(id, name, displayName) {
+        super(id, name, displayName);
         this.objectType = "VibrationPattern";
         this.vibrationPatternElements = [];
     }
@@ -4880,18 +4887,11 @@ class AbstractQuestion extends _AbstractStudyObject__WEBPACK_IMPORTED_MODULE_0__
      * @param id ist die eindeutige Identifikationsnummer des Fragenobjekts
      */
     constructor(id, name, questionText, displayName) {
-        super(id, name);
-        this._displayName = "";
+        super(id, name, displayName);
         this._questionText = "";
         this.questionText = questionText;
         this._answer = undefined;
         this.displayName = displayName;
-    }
-    get displayName() {
-        return this._displayName;
-    }
-    set displayName(displayName) {
-        this._displayName = displayName;
     }
     get questionText() {
         return this._questionText;
