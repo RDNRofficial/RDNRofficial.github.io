@@ -388,7 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppSettings", function() { return AppSettings; });
 class AppSettings {
 }
-AppSettings.baseURL = "https://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+AppSettings.baseURL = "http://localhost:8000/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
 
 /***/ }),
@@ -3505,16 +3505,6 @@ let StudyCreationComponent = class StudyCreationComponent {
     ngOnInit() {
         if (!this.studywrapper.study) {
             this.router.navigate(["dashboard"]);
-        }
-        else {
-            this.savingInterval = setInterval(() => {
-                if (this.studywrapper.study) {
-                    this.save();
-                }
-                else {
-                    clearInterval(this.savingInterval);
-                }
-            }, 10000);
         }
     }
     save() {

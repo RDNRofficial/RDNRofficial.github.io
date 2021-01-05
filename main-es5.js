@@ -704,7 +704,7 @@
         _classCallCheck(this, AppSettings);
       };
 
-      AppSettings.baseURL = "https://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+      AppSettings.baseURL = "http://localhost:8000/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
       /***/
     },
@@ -6364,25 +6364,15 @@
         }, {
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this27 = this;
-
             if (!this.studywrapper.study) {
               this.router.navigate(["dashboard"]);
-            } else {
-              this.savingInterval = setInterval(function () {
-                if (_this27.studywrapper.study) {
-                  _this27.save();
-                } else {
-                  clearInterval(_this27.savingInterval);
-                }
-              }, 10000);
             }
           }
         }, {
           key: "save",
           value: function save() {
             return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
-              var _this28 = this;
+              var _this27 = this;
 
               return regeneratorRuntime.wrap(function _callee41$(_context41) {
                 while (1) {
@@ -6398,7 +6388,7 @@
                       return this.studyService.save(this.studywrapper.study).then(function (result) {
                         if (result) {
                           setTimeout(function () {
-                            _this28.saving = false;
+                            _this27.saving = false;
                           }, 1000);
                         }
                       });
@@ -6678,18 +6668,18 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function DateQuestion(id, name, questionText, displayName, start, end) {
-          var _thisSuper3, _this29;
+          var _thisSuper3, _this28;
 
           _classCallCheck(this, DateQuestion);
 
-          _this29 = _super8.call(this, id, name, questionText, displayName);
-          _this29.objectType = "DateQuestion";
-          _this29.start = start;
-          _this29.end = end;
+          _this28 = _super8.call(this, id, name, questionText, displayName);
+          _this28.objectType = "DateQuestion";
+          _this28.start = start;
+          _this28.end = end;
 
-          _set((_thisSuper3 = _assertThisInitialized(_this29), _getPrototypeOf(DateQuestion.prototype)), "answer", "", _thisSuper3, true);
+          _set((_thisSuper3 = _assertThisInitialized(_this28), _getPrototypeOf(DateQuestion.prototype)), "answer", "", _thisSuper3, true);
 
-          return _this29;
+          return _this28;
         }
 
         _createClass(DateQuestion, [{
@@ -7546,13 +7536,13 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function QualificationQuestion(id, name, questionText, displayName, requiredAnswer) {
-          var _this30;
+          var _this29;
 
           _classCallCheck(this, QualificationQuestion);
 
-          _this30 = _super9.call(this, id, name, questionText, displayName);
-          _this30.requiredAnswer = requiredAnswer;
-          return _this30;
+          _this29 = _super9.call(this, id, name, questionText, displayName);
+          _this29.requiredAnswer = requiredAnswer;
+          return _this29;
         }
 
         _createClass(QualificationQuestion, [{
@@ -7746,17 +7736,17 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function TextQuestion(id, name, questionText, displayName, length) {
-          var _thisSuper4, _this31;
+          var _thisSuper4, _this30;
 
           _classCallCheck(this, TextQuestion);
 
-          _this31 = _super10.call(this, id, name, questionText, displayName);
-          _this31.objectType = "TextQuestion";
-          _this31.length = length;
+          _this30 = _super10.call(this, id, name, questionText, displayName);
+          _this30.objectType = "TextQuestion";
+          _this30.length = length;
 
-          _set((_thisSuper4 = _assertThisInitialized(_this31), _getPrototypeOf(TextQuestion.prototype)), "answer", "", _thisSuper4, true);
+          _set((_thisSuper4 = _assertThisInitialized(_this30), _getPrototypeOf(TextQuestion.prototype)), "answer", "", _thisSuper4, true);
 
-          return _this31;
+          return _this30;
         }
 
         _createClass(TextQuestion, [{
@@ -8031,14 +8021,14 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function VibrationPattern(id, name, displayName) {
-          var _this32;
+          var _this31;
 
           _classCallCheck(this, VibrationPattern);
 
-          _this32 = _super11.call(this, id, name, displayName);
-          _this32.objectType = "VibrationPattern";
-          _this32.vibrationPatternElements = [];
-          return _this32;
+          _this31 = _super11.call(this, id, name, displayName);
+          _this31.objectType = "VibrationPattern";
+          _this31.vibrationPatternElements = [];
+          return _this31;
         }
 
         _createClass(VibrationPattern, [{
@@ -8269,7 +8259,7 @@
           key: "login",
           value: function login() {
             return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
-              var _this33 = this;
+              var _this32 = this;
 
               return regeneratorRuntime.wrap(function _callee46$(_context46) {
                 while (1) {
@@ -8283,9 +8273,9 @@
                       _context46.next = 3;
                       return this.authService.login(this.email, this.password).then(function (result) {
                         if (result) {
-                          _this33.toDashboard();
+                          _this32.toDashboard();
                         } else {
-                          _this33.alertService.alert("Anmeldung fehlgeschlagen. Überprüfe die eingegebene E-Mail und das Passwort.");
+                          _this32.alertService.alert("Anmeldung fehlgeschlagen. Überprüfe die eingegebene E-Mail und das Passwort.");
                         }
                       });
 
@@ -8823,16 +8813,16 @@
          * @param id ist die eindeutige Identifikationsnummer des Fragenobjekts
          */
         function AbstractQuestion(id, name, questionText, displayName) {
-          var _this34;
+          var _this33;
 
           _classCallCheck(this, AbstractQuestion);
 
-          _this34 = _super12.call(this, id, name, displayName);
-          _this34._questionText = "";
-          _this34.questionText = questionText;
-          _this34._answer = undefined;
-          _this34.displayName = displayName;
-          return _this34;
+          _this33 = _super12.call(this, id, name, displayName);
+          _this33._questionText = "";
+          _this33.questionText = questionText;
+          _this33._answer = undefined;
+          _this33.displayName = displayName;
+          return _this33;
         }
 
         _createClass(AbstractQuestion, [{
