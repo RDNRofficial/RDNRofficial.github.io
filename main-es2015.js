@@ -388,7 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppSettings", function() { return AppSettings; });
 class AppSettings {
 }
-AppSettings.baseURL = "http://localhost:8000/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+AppSettings.baseURL = "http://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
 
 /***/ }),

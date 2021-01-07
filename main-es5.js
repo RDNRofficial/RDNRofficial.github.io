@@ -704,7 +704,7 @@
         _classCallCheck(this, AppSettings);
       };
 
-      AppSettings.baseURL = "http://localhost:8000/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+      AppSettings.baseURL = "http://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
       /***/
     },
