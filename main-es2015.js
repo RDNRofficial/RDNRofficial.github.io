@@ -388,7 +388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppSettings", function() { return AppSettings; });
 class AppSettings {
 }
-AppSettings.baseURL = "https://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+AppSettings.baseURL = "https://vibrostudies.dmz.teco.edu/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
 
 /***/ }),
@@ -3468,7 +3468,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "8Y7J");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "iInd");
 /* harmony import */ var _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Model/Study/StudyPrototypeDAO.service */ "osms");
-/* harmony import */ var _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/study-wrapper/study-wrapper.service */ "pzGZ");
+/* harmony import */ var _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/auth/auth.service */ "9ans");
+/* harmony import */ var _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/study-wrapper/study-wrapper.service */ "pzGZ");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3493,11 +3494,13 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
 
+
 let StudyCreationComponent = class StudyCreationComponent {
-    constructor(router, studywrapper, studyService) {
+    constructor(router, studywrapper, studyService, authService) {
         this.router = router;
         this.studywrapper = studywrapper;
         this.studyService = studyService;
+        this.authService = authService;
         this.saving = false;
     }
     ngOnDestroy() {
@@ -3505,6 +3508,9 @@ let StudyCreationComponent = class StudyCreationComponent {
     ngOnInit() {
         if (!this.studywrapper.study) {
             this.router.navigate(["dashboard"]);
+        }
+        else {
+            console.log(JSON.stringify({ study: this.studywrapper.study, token: this.authService.getAuthToken() }));
         }
     }
     save() {
@@ -3524,8 +3530,9 @@ let StudyCreationComponent = class StudyCreationComponent {
 };
 StudyCreationComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
-    { type: _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__["StudyWrapperService"] },
-    { type: _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"] }
+    { type: _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_6__["StudyWrapperService"] },
+    { type: _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"] },
+    { type: _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"] }
 ];
 StudyCreationComponent = __decorate([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
@@ -3534,8 +3541,9 @@ StudyCreationComponent = __decorate([
         styles: [_studycreation_component_css__WEBPACK_IMPORTED_MODULE_1__["default"]]
     }),
     __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
-        _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__["StudyWrapperService"],
-        _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"]])
+        _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_6__["StudyWrapperService"],
+        _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"],
+        _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]])
 ], StudyCreationComponent);
 
 

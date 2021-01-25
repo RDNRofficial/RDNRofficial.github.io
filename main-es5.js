@@ -704,7 +704,7 @@
         _classCallCheck(this, AppSettings);
       };
 
-      AppSettings.baseURL = "https://bitschi.hopto.org/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
+      AppSettings.baseURL = "https://vibrostudies.dmz.teco.edu/"; // HIER * DURCH BACKEND SERVER URL ERSETZEN
 
       /***/
     },
@@ -6298,7 +6298,13 @@
       /* harmony import */
 
 
-      var _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ../services/auth/auth.service */
+      "9ans");
+      /* harmony import */
+
+
+      var _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ../services/study-wrapper/study-wrapper.service */
       "pzGZ");
 
@@ -6349,12 +6355,13 @@
       };
 
       var StudyCreationComponent = /*#__PURE__*/function () {
-        function StudyCreationComponent(router, studywrapper, studyService) {
+        function StudyCreationComponent(router, studywrapper, studyService, authService) {
           _classCallCheck(this, StudyCreationComponent);
 
           this.router = router;
           this.studywrapper = studywrapper;
           this.studyService = studyService;
+          this.authService = authService;
           this.saving = false;
         }
 
@@ -6366,6 +6373,11 @@
           value: function ngOnInit() {
             if (!this.studywrapper.study) {
               this.router.navigate(["dashboard"]);
+            } else {
+              console.log(JSON.stringify({
+                study: this.studywrapper.study,
+                token: this.authService.getAuthToken()
+              }));
             }
           }
         }, {
@@ -6410,9 +6422,11 @@
         return [{
           type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
         }, {
-          type: _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__["StudyWrapperService"]
+          type: _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_6__["StudyWrapperService"]
         }, {
           type: _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"]
+        }, {
+          type: _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]
         }];
       };
 
@@ -6420,7 +6434,7 @@
         selector: 'app-studycreation',
         template: _raw_loader_studycreation_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_studycreation_component_css__WEBPACK_IMPORTED_MODULE_1__["default"]]
-      }), __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_5__["StudyWrapperService"], _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"]])], StudyCreationComponent);
+      }), __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _services_study_wrapper_study_wrapper_service__WEBPACK_IMPORTED_MODULE_6__["StudyWrapperService"], _Model_Study_StudyPrototypeDAO_service__WEBPACK_IMPORTED_MODULE_4__["StudyPrototypeDAO"], _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]])], StudyCreationComponent);
       /***/
     },
 

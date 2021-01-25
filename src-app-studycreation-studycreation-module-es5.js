@@ -3175,6 +3175,20 @@
         });
       }
       /**
+       * Toggles whether an element is visible while preserving its dimensions.
+       * @param element Element whose visibility to toggle
+       * @param enable Whether the element should be visible.
+       * @docs-private
+       */
+
+
+      function toggleVisibility(element, enable) {
+        var styles = element.style;
+        styles.position = enable ? '' : 'fixed';
+        styles.top = styles.opacity = enable ? '' : '0';
+        styles.left = enable ? '' : '-999em';
+      }
+      /**
        * @license
        * Copyright Google LLC All Rights Reserved.
        *
@@ -3447,9 +3461,13 @@
       /** Transfers the data of one input element to another. */
 
       function transferInputData(source, clone) {
-        clone.value = source.value; // Radio button `name` attributes must be unique for radio button groups
+        // Browsers throw an error when assigning the value of a file input programmatically.
+        if (clone.type !== 'file') {
+          clone.value = source.value;
+        } // Radio button `name` attributes must be unique for radio button groups
         // otherwise original radio buttons can lose their checked state
         // once the clone is inserted in the DOM.
+
 
         if (clone.type === 'radio' && clone.name) {
           clone.name = "mat-clone-".concat(clone.name, "-").concat(cloneUniqueId++);
@@ -3632,6 +3650,8 @@
               if (isOverThreshold) {
                 var isDelayElapsed = Date.now() >= _this7._dragStartTime + _this7._getDragStartDelay(event);
 
+                var container = _this7._dropContainer;
+
                 if (!isDelayElapsed) {
                   _this7._endDragSequence(event);
 
@@ -3641,7 +3661,7 @@
                 // and can cause errors, because some elements might still be moving around.
 
 
-                if (!_this7._dropContainer || !_this7._dropContainer.isDragging()) {
+                if (!container || !container.isDragging() && !container.isReceiving()) {
                   _this7._hasStartedDragging = true;
 
                   _this7._ngZone.run(function () {
@@ -4122,7 +4142,7 @@
               // place will throw off the consumer's `:last-child` selectors. We can't remove the element
               // from the DOM completely, because iOS will stop firing all subsequent events in the chain.
 
-              element.style.display = 'none';
+              toggleVisibility(element, false);
 
               this._document.body.appendChild(parent.replaceChild(placeholder, element));
 
@@ -4238,7 +4258,7 @@
             // It's important that we maintain the position, because moving the element around in the DOM
             // can throw off `NgFor` which does smart diffing and re-creates elements only when necessary,
             // while moving the existing elements in all other cases.
-            this._rootElement.style.display = '';
+            toggleVisibility(this._rootElement, true);
 
             this._anchor.parentNode.replaceChild(this._rootElement, this._anchor);
 
