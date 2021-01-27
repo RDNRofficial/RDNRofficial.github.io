@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div *ngIf=\"loading\">\r\n    <mat-spinner></mat-spinner>\r\n</div>\r\n<div *ngFor=\"let keyData of studies; let index = index\">\r\n    <mat-card>\r\n        <div class=\"card-container\">\r\n            <mat-card-title class=\"card-container-left\">{{ keyData.name }}</mat-card-title>\r\n            <div class=\"buttonrow\">\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"greenButton\" (click)=\"onEditClick(keyData)\">\r\n                    <mat-icon>edit</mat-icon>&nbsp;Bearbeiten\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"brownButton\" (click)=\"publish(keyData)\">\r\n                    <mat-icon>publish</mat-icon>&nbsp;Veröffentlichen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 1\" mat-flat-button class=\"greenButton\" (click)=\"onEndClick(keyData)\">\r\n                    <mat-icon>clear</mat-icon>&nbsp;Beenden\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"brownButton\" (click)=\"resetStudy(keyData.id)\">\r\n                    <mat-icon>replay</mat-icon>&nbsp;Zurücksetzen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getCSV(keyData.id)\">\r\n                    <mat-icon>assessment</mat-icon>&nbsp;Ergebnisse\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getParticipants(keyData.id)\">\r\n                    <mat-icon>supervisor_account</mat-icon>&nbsp;Teilnehmerliste\r\n                </button>\r\n\r\n                <button mat-flat-button class=\"redButton\" (click)=\"onDelete(keyData)\" style=\"margin-left: 15px\">\r\n                    <mat-icon>delete</mat-icon>&nbsp;Löschen\r\n                </button>\r\n            </div>\r\n        </div><br>\r\n        <mat-divider></mat-divider><br>\r\n        <mat-card-content style=\"word-wrap: normal;\">\r\n            {{keyData.shortDescription.text}}\r\n        </mat-card-content>\r\n    </mat-card>\r\n    <br />\r\n</div>\r\n<a mat-fab class=\"greenButton\" (click)=\"onNewClick()\" style=\"display: block; margin: auto;\">\r\n    <mat-icon>add</mat-icon>\r\n</a>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div *ngIf=\"loading\">\r\n    <mat-spinner></mat-spinner>\r\n</div>\r\n<div *ngFor=\"let keyData of studies; let index = index\">\r\n    <mat-card>\r\n        <div class=\"card-container\">\r\n            <mat-card-title class=\"card-container-left\">{{ keyData.name }}</mat-card-title>\r\n            <mat-card-subtitle>Ergebnisanzahl: {{ studyAmount[index] }}</mat-card-subtitle>\r\n            <div class=\"buttonrow\">\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"greenButton\" (click)=\"onEditClick(keyData)\">\r\n                    <mat-icon>edit</mat-icon>&nbsp;Bearbeiten\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"brownButton\" (click)=\"publish(keyData)\">\r\n                    <mat-icon>publish</mat-icon>&nbsp;Veröffentlichen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 1\" mat-flat-button class=\"greenButton\" (click)=\"onEndClick(keyData)\">\r\n                    <mat-icon>clear</mat-icon>&nbsp;Beenden\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"brownButton\" (click)=\"resetStudy(keyData.id)\">\r\n                    <mat-icon>replay</mat-icon>&nbsp;Zurücksetzen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getCSV(keyData.id)\">\r\n                    <mat-icon>assessment</mat-icon>&nbsp;Ergebnisse\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getParticipants(keyData.id)\">\r\n                    <mat-icon>supervisor_account</mat-icon>&nbsp;Teilnehmerliste\r\n                </button>\r\n\r\n                <button mat-flat-button class=\"redButton\" (click)=\"onDelete(keyData)\" style=\"margin-left: 15px\">\r\n                    <mat-icon>delete</mat-icon>&nbsp;Löschen\r\n                </button>\r\n            </div>\r\n        </div><br>\r\n        <mat-divider></mat-divider><br>\r\n        <mat-card-content style=\"word-wrap: normal;\">\r\n            {{keyData.shortDescription.text}}\r\n        </mat-card-content>\r\n    </mat-card>\r\n    <br />\r\n</div>\r\n<a mat-fab class=\"greenButton\" (click)=\"onNewClick()\" style=\"display: block; margin: auto;\">\r\n    <mat-icon>add</mat-icon>\r\n</a>");
 
 /***/ }),
 
@@ -1175,6 +1175,7 @@ let MyStudiesComponent = class MyStudiesComponent {
          * boolean, welches zeigt, ob etwas erstellt wird oder nicht.
          */
         this.creating = false;
+        this.studyAmount = [];
     }
     /**
      * Initialisiert die AvailableStudiesComponent.
@@ -1195,15 +1196,20 @@ let MyStudiesComponent = class MyStudiesComponent {
     getStudies() {
         return __awaiter(this, void 0, void 0, function* () {
             this.loading = true;
-            yield this.keyDataService.getFromUserId(this.authService.getUser().id).then(keyDataResults => {
+            yield this.keyDataService.getFromUserId(this.authService.getUser().id).then((keyDataResults) => __awaiter(this, void 0, void 0, function* () {
                 if (keyDataResults.length > 0) {
                     this.studies = keyDataResults;
+                    for (let i = 0; i < this.studies.length; i++) {
+                        yield this.resultService.get(this.studies[i].id).then((result) => __awaiter(this, void 0, void 0, function* () {
+                            this.studyAmount[i] = result.length;
+                        }));
+                    }
                 }
                 else {
                     this.studies = [];
                 }
                 this.loading = false;
-            });
+            }));
         });
     }
     /**
@@ -1285,6 +1291,11 @@ let MyStudiesComponent = class MyStudiesComponent {
                 userResult = result;
             });
             this.csvService.giveResultCSV(study, userResult);
+        });
+    }
+    getParticipantCount(studyId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return 0;
         });
     }
     /**

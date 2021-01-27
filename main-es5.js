@@ -50,7 +50,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<div *ngIf=\"loading\">\r\n    <mat-spinner></mat-spinner>\r\n</div>\r\n<div *ngFor=\"let keyData of studies; let index = index\">\r\n    <mat-card>\r\n        <div class=\"card-container\">\r\n            <mat-card-title class=\"card-container-left\">{{ keyData.name }}</mat-card-title>\r\n            <div class=\"buttonrow\">\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"greenButton\" (click)=\"onEditClick(keyData)\">\r\n                    <mat-icon>edit</mat-icon>&nbsp;Bearbeiten\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"brownButton\" (click)=\"publish(keyData)\">\r\n                    <mat-icon>publish</mat-icon>&nbsp;Veröffentlichen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 1\" mat-flat-button class=\"greenButton\" (click)=\"onEndClick(keyData)\">\r\n                    <mat-icon>clear</mat-icon>&nbsp;Beenden\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"brownButton\" (click)=\"resetStudy(keyData.id)\">\r\n                    <mat-icon>replay</mat-icon>&nbsp;Zurücksetzen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getCSV(keyData.id)\">\r\n                    <mat-icon>assessment</mat-icon>&nbsp;Ergebnisse\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getParticipants(keyData.id)\">\r\n                    <mat-icon>supervisor_account</mat-icon>&nbsp;Teilnehmerliste\r\n                </button>\r\n\r\n                <button mat-flat-button class=\"redButton\" (click)=\"onDelete(keyData)\" style=\"margin-left: 15px\">\r\n                    <mat-icon>delete</mat-icon>&nbsp;Löschen\r\n                </button>\r\n            </div>\r\n        </div><br>\r\n        <mat-divider></mat-divider><br>\r\n        <mat-card-content style=\"word-wrap: normal;\">\r\n            {{keyData.shortDescription.text}}\r\n        </mat-card-content>\r\n    </mat-card>\r\n    <br />\r\n</div>\r\n<a mat-fab class=\"greenButton\" (click)=\"onNewClick()\" style=\"display: block; margin: auto;\">\r\n    <mat-icon>add</mat-icon>\r\n</a>";
+      __webpack_exports__["default"] = "<div *ngIf=\"loading\">\r\n    <mat-spinner></mat-spinner>\r\n</div>\r\n<div *ngFor=\"let keyData of studies; let index = index\">\r\n    <mat-card>\r\n        <div class=\"card-container\">\r\n            <mat-card-title class=\"card-container-left\">{{ keyData.name }}</mat-card-title>\r\n            <mat-card-subtitle>Ergebnisanzahl: {{ studyAmount[index] }}</mat-card-subtitle>\r\n            <div class=\"buttonrow\">\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"greenButton\" (click)=\"onEditClick(keyData)\">\r\n                    <mat-icon>edit</mat-icon>&nbsp;Bearbeiten\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 0\" mat-flat-button class=\"brownButton\" (click)=\"publish(keyData)\">\r\n                    <mat-icon>publish</mat-icon>&nbsp;Veröffentlichen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 1\" mat-flat-button class=\"greenButton\" (click)=\"onEndClick(keyData)\">\r\n                    <mat-icon>clear</mat-icon>&nbsp;Beenden\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"brownButton\" (click)=\"resetStudy(keyData.id)\">\r\n                    <mat-icon>replay</mat-icon>&nbsp;Zurücksetzen\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getCSV(keyData.id)\">\r\n                    <mat-icon>assessment</mat-icon>&nbsp;Ergebnisse\r\n                </button>\r\n\r\n                <button *ngIf=\"keyData.studyStatus == 2\" mat-flat-button class=\"greenButton\" (click)=\"getParticipants(keyData.id)\">\r\n                    <mat-icon>supervisor_account</mat-icon>&nbsp;Teilnehmerliste\r\n                </button>\r\n\r\n                <button mat-flat-button class=\"redButton\" (click)=\"onDelete(keyData)\" style=\"margin-left: 15px\">\r\n                    <mat-icon>delete</mat-icon>&nbsp;Löschen\r\n                </button>\r\n            </div>\r\n        </div><br>\r\n        <mat-divider></mat-divider><br>\r\n        <mat-card-content style=\"word-wrap: normal;\">\r\n            {{keyData.shortDescription.text}}\r\n        </mat-card-content>\r\n    </mat-card>\r\n    <br />\r\n</div>\r\n<a mat-fab class=\"greenButton\" (click)=\"onNewClick()\" style=\"display: block; margin: auto;\">\r\n    <mat-icon>add</mat-icon>\r\n</a>";
       /***/
     },
 
@@ -2245,6 +2245,7 @@
            */
 
           this.creating = false;
+          this.studyAmount = [];
         }
         /**
          * Initialisiert die AvailableStudiesComponent.
@@ -2289,31 +2290,101 @@
         }, {
           key: "getStudies",
           value: function getStudies() {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
               var _this14 = this;
 
-              return regeneratorRuntime.wrap(function _callee17$(_context17) {
+              return regeneratorRuntime.wrap(function _callee19$(_context20) {
                 while (1) {
-                  switch (_context17.prev = _context17.next) {
+                  switch (_context20.prev = _context20.next) {
                     case 0:
                       this.loading = true;
-                      _context17.next = 3;
+                      _context20.next = 3;
                       return this.keyDataService.getFromUserId(this.authService.getUser().id).then(function (keyDataResults) {
-                        if (keyDataResults.length > 0) {
-                          _this14.studies = keyDataResults;
-                        } else {
-                          _this14.studies = [];
-                        }
+                        return __awaiter(_this14, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
+                          var _this15 = this;
 
-                        _this14.loading = false;
+                          var _loop, i;
+
+                          return regeneratorRuntime.wrap(function _callee18$(_context19) {
+                            while (1) {
+                              switch (_context19.prev = _context19.next) {
+                                case 0:
+                                  if (!(keyDataResults.length > 0)) {
+                                    _context19.next = 11;
+                                    break;
+                                  }
+
+                                  this.studies = keyDataResults;
+                                  _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop(i) {
+                                    return regeneratorRuntime.wrap(function _loop$(_context18) {
+                                      while (1) {
+                                        switch (_context18.prev = _context18.next) {
+                                          case 0:
+                                            _context18.next = 2;
+                                            return _this15.resultService.get(_this15.studies[i].id).then(function (result) {
+                                              return __awaiter(_this15, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
+                                                return regeneratorRuntime.wrap(function _callee17$(_context17) {
+                                                  while (1) {
+                                                    switch (_context17.prev = _context17.next) {
+                                                      case 0:
+                                                        this.studyAmount[i] = result.length;
+
+                                                      case 1:
+                                                      case "end":
+                                                        return _context17.stop();
+                                                    }
+                                                  }
+                                                }, _callee17, this);
+                                              }));
+                                            });
+
+                                          case 2:
+                                          case "end":
+                                            return _context18.stop();
+                                        }
+                                      }
+                                    }, _loop);
+                                  });
+                                  i = 0;
+
+                                case 4:
+                                  if (!(i < this.studies.length)) {
+                                    _context19.next = 9;
+                                    break;
+                                  }
+
+                                  return _context19.delegateYield(_loop(i), "t0", 6);
+
+                                case 6:
+                                  i++;
+                                  _context19.next = 4;
+                                  break;
+
+                                case 9:
+                                  _context19.next = 12;
+                                  break;
+
+                                case 11:
+                                  this.studies = [];
+
+                                case 12:
+                                  this.loading = false;
+
+                                case 13:
+                                case "end":
+                                  return _context19.stop();
+                              }
+                            }
+                          }, _callee18, this);
+                        }));
                       });
 
                     case 3:
                     case "end":
-                      return _context17.stop();
+                      return _context20.stop();
                   }
                 }
-              }, _callee17, this);
+              }, _callee19, this);
             }));
           }
           /**
@@ -2324,16 +2395,16 @@
         }, {
           key: "onEditClick",
           value: function onEditClick(keyData) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
-              var _this15 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
+              var _this16 = this;
 
-              return regeneratorRuntime.wrap(function _callee18$(_context18) {
+              return regeneratorRuntime.wrap(function _callee20$(_context21) {
                 while (1) {
-                  switch (_context18.prev = _context18.next) {
+                  switch (_context21.prev = _context21.next) {
                     case 0:
-                      _context18.next = 2;
+                      _context21.next = 2;
                       return this.studyService.get(keyData.id).then(function (studyResult) {
-                        _this15.studywrapper.study = studyResult;
+                        _this16.studywrapper.study = studyResult;
                       });
 
                     case 2:
@@ -2343,10 +2414,10 @@
 
                     case 3:
                     case "end":
-                      return _context18.stop();
+                      return _context21.stop();
                   }
                 }
-              }, _callee18, this);
+              }, _callee20, this);
             }));
           }
           /**
@@ -2357,46 +2428,46 @@
         }, {
           key: "onDelete",
           value: function onDelete(keyData) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
-              var _this16 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
+              var _this17 = this;
 
-              return regeneratorRuntime.wrap(function _callee20$(_context20) {
+              return regeneratorRuntime.wrap(function _callee22$(_context23) {
                 while (1) {
-                  switch (_context20.prev = _context20.next) {
+                  switch (_context23.prev = _context23.next) {
                     case 0:
                       this.confirmDialogService.openDialog("Hiermit wird die Studie unwiderruflich gelöscht!").then(function (isConfirmed) {
-                        return __awaiter(_this16, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
-                          var _this17 = this;
+                        return __awaiter(_this17, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+                          var _this18 = this;
 
-                          return regeneratorRuntime.wrap(function _callee19$(_context19) {
+                          return regeneratorRuntime.wrap(function _callee21$(_context22) {
                             while (1) {
-                              switch (_context19.prev = _context19.next) {
+                              switch (_context22.prev = _context22.next) {
                                 case 0:
                                   if (!isConfirmed) {
-                                    _context19.next = 3;
+                                    _context22.next = 3;
                                     break;
                                   }
 
-                                  _context19.next = 3;
+                                  _context22.next = 3;
                                   return this.keyDataService["delete"](keyData.id).then(function (keyDataResult) {
-                                    _this17.getStudies();
+                                    _this18.getStudies();
                                   });
 
                                 case 3:
                                 case "end":
-                                  return _context19.stop();
+                                  return _context22.stop();
                               }
                             }
-                          }, _callee19, this);
+                          }, _callee21, this);
                         }));
                       });
 
                     case 1:
                     case "end":
-                      return _context20.stop();
+                      return _context23.stop();
                   }
                 }
-              }, _callee20, this);
+              }, _callee22, this);
             }));
           }
           /**
@@ -2407,27 +2478,27 @@
         }, {
           key: "onEndClick",
           value: function onEndClick(keyData) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
-              var _this18 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee23() {
+              var _this19 = this;
 
-              return regeneratorRuntime.wrap(function _callee21$(_context21) {
+              return regeneratorRuntime.wrap(function _callee23$(_context24) {
                 while (1) {
-                  switch (_context21.prev = _context21.next) {
+                  switch (_context24.prev = _context24.next) {
                     case 0:
                       keyData.studyStatus = _src_app_Model_Study_StudyStatus__WEBPACK_IMPORTED_MODULE_8__["StudyStatus"].FINISHED;
-                      _context21.next = 3;
+                      _context24.next = 3;
                       return this.keyDataService.updateStudyState(keyData.id, _src_app_Model_Study_StudyStatus__WEBPACK_IMPORTED_MODULE_8__["StudyStatus"].FINISHED).then(function (result) {
                         if (result) {
-                          _this18.getStudies();
+                          _this19.getStudies();
                         }
                       });
 
                     case 3:
                     case "end":
-                      return _context21.stop();
+                      return _context24.stop();
                   }
                 }
-              }, _callee21, this);
+              }, _callee23, this);
             }));
           }
           /**
@@ -2437,67 +2508,67 @@
         }, {
           key: "onNewClick",
           value: function onNewClick() {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee23() {
-              var _this19 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee25() {
+              var _this20 = this;
 
               var user, keyData, study;
-              return regeneratorRuntime.wrap(function _callee23$(_context23) {
+              return regeneratorRuntime.wrap(function _callee25$(_context26) {
                 while (1) {
-                  switch (_context23.prev = _context23.next) {
+                  switch (_context26.prev = _context26.next) {
                     case 0:
                       if (this.creating) {
-                        _context23.next = 10;
+                        _context26.next = 10;
                         break;
                       }
 
                       this.creating = true;
-                      _context23.next = 4;
+                      _context26.next = 4;
                       return this.authService.getUser();
 
                     case 4:
-                      user = _context23.sent;
+                      user = _context26.sent;
                       keyData = new _src_app_Model_Study_KeyData__WEBPACK_IMPORTED_MODULE_4__["KeyData"](-1, user, _src_app_Model_Study_StudyStatus__WEBPACK_IMPORTED_MODULE_8__["StudyStatus"].CREATED, new _src_app_Model_Study_ShortDescription__WEBPACK_IMPORTED_MODULE_6__["ShortDescription"]("Neue Studie"), "Neue Studie", false, "Neue Studie");
                       study = new _src_app_Model_Study_StudyPrototype__WEBPACK_IMPORTED_MODULE_12__["StudyPrototype"](keyData);
                       study.randomStrategy = _src_app_Model_Randomizing_RandomizingStrategies__WEBPACK_IMPORTED_MODULE_14__["RandomizingStrategies"].STANDARD;
-                      _context23.next = 10;
+                      _context26.next = 10;
                       return this.studyService.save(study).then(function (result) {
-                        return __awaiter(_this19, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
-                          var _this20 = this;
+                        return __awaiter(_this20, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee24() {
+                          var _this21 = this;
 
-                          return regeneratorRuntime.wrap(function _callee22$(_context22) {
+                          return regeneratorRuntime.wrap(function _callee24$(_context25) {
                             while (1) {
-                              switch (_context22.prev = _context22.next) {
+                              switch (_context25.prev = _context25.next) {
                                 case 0:
                                   if (!result) {
-                                    _context22.next = 3;
+                                    _context25.next = 3;
                                     break;
                                   }
 
-                                  _context22.next = 3;
+                                  _context25.next = 3;
                                   return this.studyService.get(result).then(function (studyResult) {
-                                    _this20.studywrapper.study = studyResult;
-                                    _this20.creating = false;
+                                    _this21.studywrapper.study = studyResult;
+                                    _this21.creating = false;
 
-                                    _this20.router.navigate(["studycreation/general-editing"], {
+                                    _this21.router.navigate(["studycreation/general-editing"], {
                                       replaceUrl: true
                                     });
                                   });
 
                                 case 3:
                                 case "end":
-                                  return _context22.stop();
+                                  return _context25.stop();
                               }
                             }
-                          }, _callee22, this);
+                          }, _callee24, this);
                         }));
                       });
 
                     case 10:
                     case "end":
-                      return _context23.stop();
+                      return _context26.stop();
                   }
                 }
-              }, _callee23, this);
+              }, _callee25, this);
             }));
           }
           /**
@@ -2508,19 +2579,19 @@
         }, {
           key: "getCSV",
           value: function getCSV(studyId) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee24() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee26() {
               var study, userResult;
-              return regeneratorRuntime.wrap(function _callee24$(_context24) {
+              return regeneratorRuntime.wrap(function _callee26$(_context27) {
                 while (1) {
-                  switch (_context24.prev = _context24.next) {
+                  switch (_context27.prev = _context27.next) {
                     case 0:
-                      _context24.next = 2;
+                      _context27.next = 2;
                       return this.studyService.get(studyId).then(function (studyResult) {
                         study = studyResult;
                       });
 
                     case 2:
-                      _context24.next = 4;
+                      _context27.next = 4;
                       return this.resultService.get(studyId).then(function (result) {
                         userResult = result;
                       });
@@ -2530,10 +2601,28 @@
 
                     case 5:
                     case "end":
-                      return _context24.stop();
+                      return _context27.stop();
                   }
                 }
-              }, _callee24, this);
+              }, _callee26, this);
+            }));
+          }
+        }, {
+          key: "getParticipantCount",
+          value: function getParticipantCount(studyId) {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee27() {
+              return regeneratorRuntime.wrap(function _callee27$(_context28) {
+                while (1) {
+                  switch (_context28.prev = _context28.next) {
+                    case 0:
+                      return _context28.abrupt("return", 0);
+
+                    case 1:
+                    case "end":
+                      return _context28.stop();
+                  }
+                }
+              }, _callee27);
             }));
           }
           /**
@@ -2545,19 +2634,19 @@
         }, {
           key: "getParticipants",
           value: function getParticipants(studyId) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee25() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee28() {
               var study, userResult;
-              return regeneratorRuntime.wrap(function _callee25$(_context25) {
+              return regeneratorRuntime.wrap(function _callee28$(_context29) {
                 while (1) {
-                  switch (_context25.prev = _context25.next) {
+                  switch (_context29.prev = _context29.next) {
                     case 0:
-                      _context25.next = 2;
+                      _context29.next = 2;
                       return this.studyService.get(studyId).then(function (studyResult) {
                         study = studyResult;
                       });
 
                     case 2:
-                      _context25.next = 4;
+                      _context29.next = 4;
                       return this.resultService.get(studyId).then(function (result) {
                         userResult = result;
                       });
@@ -2567,10 +2656,10 @@
 
                     case 5:
                     case "end":
-                      return _context25.stop();
+                      return _context29.stop();
                   }
                 }
-              }, _callee25, this);
+              }, _callee28, this);
             }));
           }
           /**
@@ -2581,37 +2670,37 @@
         }, {
           key: "resetStudy",
           value: function resetStudy(studyId) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee27() {
-              var _this21 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee30() {
+              var _this22 = this;
 
-              return regeneratorRuntime.wrap(function _callee27$(_context27) {
+              return regeneratorRuntime.wrap(function _callee30$(_context31) {
                 while (1) {
-                  switch (_context27.prev = _context27.next) {
+                  switch (_context31.prev = _context31.next) {
                     case 0:
                       this.confirmDialogService.openDialog("Beim Zurücksetzen der Studie werden auch alle Studienergebnisse gelöscht!").then(function (isConfirmed) {
-                        return __awaiter(_this21, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee26() {
+                        return __awaiter(_this22, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee29() {
                           var study;
-                          return regeneratorRuntime.wrap(function _callee26$(_context26) {
+                          return regeneratorRuntime.wrap(function _callee29$(_context30) {
                             while (1) {
-                              switch (_context26.prev = _context26.next) {
+                              switch (_context30.prev = _context30.next) {
                                 case 0:
                                   if (!isConfirmed) {
-                                    _context26.next = 9;
+                                    _context30.next = 9;
                                     break;
                                   }
 
-                                  _context26.next = 3;
+                                  _context30.next = 3;
                                   return this.studyService.get(studyId).then(function (studyResult) {
                                     study = studyResult;
                                   });
 
                                 case 3:
                                   study.keyData.studyStatus = _src_app_Model_Study_StudyStatus__WEBPACK_IMPORTED_MODULE_8__["StudyStatus"].CREATED;
-                                  _context26.next = 6;
+                                  _context30.next = 6;
                                   return this.keyDataService["delete"](study.keyData.id);
 
                                 case 6:
-                                  _context26.next = 8;
+                                  _context30.next = 8;
                                   return this.studyService.save(study);
 
                                 case 8:
@@ -2619,19 +2708,19 @@
 
                                 case 9:
                                 case "end":
-                                  return _context26.stop();
+                                  return _context30.stop();
                               }
                             }
-                          }, _callee26, this);
+                          }, _callee29, this);
                         }));
                       });
 
                     case 1:
                     case "end":
-                      return _context27.stop();
+                      return _context31.stop();
                   }
                 }
-              }, _callee27, this);
+              }, _callee30, this);
             }));
           }
           /**
@@ -2642,27 +2731,27 @@
         }, {
           key: "publish",
           value: function publish(keyData) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee28() {
-              var _this22 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee31() {
+              var _this23 = this;
 
-              return regeneratorRuntime.wrap(function _callee28$(_context28) {
+              return regeneratorRuntime.wrap(function _callee31$(_context32) {
                 while (1) {
-                  switch (_context28.prev = _context28.next) {
+                  switch (_context32.prev = _context32.next) {
                     case 0:
                       keyData.studyStatus = _src_app_Model_Study_StudyStatus__WEBPACK_IMPORTED_MODULE_8__["StudyStatus"].PUBLISHED;
-                      _context28.next = 3;
+                      _context32.next = 3;
                       return this.keyDataService.updateStudyState(keyData.id, _src_app_Model_Study_StudyStatus__WEBPACK_IMPORTED_MODULE_8__["StudyStatus"].PUBLISHED).then(function (result) {
                         if (result) {
-                          _this22.getStudies();
+                          _this23.getStudies();
                         }
                       });
 
                     case 3:
                     case "end":
-                      return _context28.stop();
+                      return _context32.stop();
                   }
                 }
-              }, _callee28, this);
+              }, _callee31, this);
             }));
           }
         }]);
@@ -3116,36 +3205,36 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function SectionElement(id, name, displayName, randomStrategy, studyObjects, verifier) {
-          var _this23;
+          var _this24;
 
           _classCallCheck(this, SectionElement);
 
-          _this23 = _super4.call(this, id, name, displayName);
+          _this24 = _super4.call(this, id, name, displayName);
           /**
            * Das Attribut gibt an, ob ein SectionElement für den Studienteilnehmer überspringbar sein soll.
            */
 
-          _this23._skippable = false;
+          _this24._skippable = false;
           /**
            * In dem Attribut sind mittels ID Referenzen auf jene Elemente gespeichert, die innerhalb eines SectionElements liegen.
            */
 
-          _this23._studyObjects = [];
+          _this24._studyObjects = [];
           /**
            * Das Attribut gibt an, ob ein SectionElement in die Ergebnisauswertung miteinbezogen wird.
            */
 
-          _this23._resultRelevant = true;
+          _this24._resultRelevant = true;
 
           if (studyObjects == null) {
-            _this23._studyObjects = [];
+            _this24._studyObjects = [];
           } else {
-            _this23._studyObjects = studyObjects;
+            _this24._studyObjects = studyObjects;
           }
 
-          _this23._verifier = verifier;
-          _this23._randomStrategy = randomStrategy;
-          return _this23;
+          _this24._verifier = verifier;
+          _this24._randomStrategy = randomStrategy;
+          return _this24;
         }
 
         _createClass(SectionElement, [{
@@ -3481,13 +3570,13 @@
         _createClass(UserDao, [{
           key: "get",
           value: function get(id) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee29() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee32() {
               var user;
-              return regeneratorRuntime.wrap(function _callee29$(_context29) {
+              return regeneratorRuntime.wrap(function _callee32$(_context33) {
                 while (1) {
-                  switch (_context29.prev = _context29.next) {
+                  switch (_context33.prev = _context33.next) {
                     case 0:
-                      _context29.next = 2;
+                      _context33.next = 2;
                       return this.http.post(this.userURL + id + "/", {
                         token: this.authService.getAuthToken()
                       }).toPromise().then(function (data) {
@@ -3495,14 +3584,14 @@
                       });
 
                     case 2:
-                      return _context29.abrupt("return", user);
+                      return _context33.abrupt("return", user);
 
                     case 3:
                     case "end":
-                      return _context29.stop();
+                      return _context33.stop();
                   }
                 }
-              }, _callee29, this);
+              }, _callee32, this);
             }));
           }
           /**
@@ -3514,14 +3603,14 @@
         }, {
           key: "checkPassword",
           value: function checkPassword(userId, password) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee30() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee33() {
               var result;
-              return regeneratorRuntime.wrap(function _callee30$(_context30) {
+              return regeneratorRuntime.wrap(function _callee33$(_context34) {
                 while (1) {
-                  switch (_context30.prev = _context30.next) {
+                  switch (_context34.prev = _context34.next) {
                     case 0:
                       result = false;
-                      _context30.next = 3;
+                      _context34.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_4__["AppSettings"].baseURL + "CheckPassword/", {
                         id: userId,
                         password: password,
@@ -3533,14 +3622,14 @@
                       });
 
                     case 3:
-                      return _context30.abrupt("return", result);
+                      return _context34.abrupt("return", result);
 
                     case 4:
                     case "end":
-                      return _context30.stop();
+                      return _context34.stop();
                   }
                 }
-              }, _callee30, this);
+              }, _callee33, this);
             }));
           }
           /**
@@ -3553,14 +3642,14 @@
         }, {
           key: "save",
           value: function save(object, oldPassword, newPassword) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee31() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee34() {
               var result;
-              return regeneratorRuntime.wrap(function _callee31$(_context31) {
+              return regeneratorRuntime.wrap(function _callee34$(_context35) {
                 while (1) {
-                  switch (_context31.prev = _context31.next) {
+                  switch (_context35.prev = _context35.next) {
                     case 0:
                       result = false;
-                      _context31.next = 3;
+                      _context35.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_4__["AppSettings"].baseURL + "SaveUser/", {
                         id: object.id,
                         firstName: object.firstName,
@@ -3575,14 +3664,14 @@
                       });
 
                     case 3:
-                      return _context31.abrupt("return", result);
+                      return _context35.abrupt("return", result);
 
                     case 4:
                     case "end":
-                      return _context31.stop();
+                      return _context35.stop();
                   }
                 }
-              }, _callee31, this);
+              }, _callee34, this);
             }));
           }
           /**
@@ -3593,14 +3682,14 @@
         }, {
           key: "delete",
           value: function _delete(object) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee32() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee35() {
               var success;
-              return regeneratorRuntime.wrap(function _callee32$(_context32) {
+              return regeneratorRuntime.wrap(function _callee35$(_context36) {
                 while (1) {
-                  switch (_context32.prev = _context32.next) {
+                  switch (_context36.prev = _context36.next) {
                     case 0:
                       success = false;
-                      _context32.next = 3;
+                      _context36.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_4__["AppSettings"].baseURL + "DeleteUser/" + object.id + "/", {
                         token: this.authService.getAuthToken()
                       }).toPromise().then(function (data) {
@@ -3610,14 +3699,14 @@
                       });
 
                     case 3:
-                      return _context32.abrupt("return", success);
+                      return _context36.abrupt("return", success);
 
                     case 4:
                     case "end":
-                      return _context32.stop();
+                      return _context36.stop();
                   }
                 }
-              }, _callee32, this);
+              }, _callee35, this);
             }));
           }
         }]);
@@ -3713,18 +3802,18 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function MultipleChoiceQuestion(id, name, questionText, displayName, answerOptions, maxChoices) {
-          var _thisSuper, _this24;
+          var _thisSuper, _this25;
 
           _classCallCheck(this, MultipleChoiceQuestion);
 
-          _this24 = _super5.call(this, id, name, questionText, displayName);
-          _this24.objectType = "MultipleChoiceQuestion";
-          _this24.maxChoices = maxChoices;
-          _this24.answerOptions = answerOptions;
+          _this25 = _super5.call(this, id, name, questionText, displayName);
+          _this25.objectType = "MultipleChoiceQuestion";
+          _this25.maxChoices = maxChoices;
+          _this25.answerOptions = answerOptions;
 
-          _set((_thisSuper = _assertThisInitialized(_this24), _getPrototypeOf(MultipleChoiceQuestion.prototype)), "answer", [], _thisSuper, true);
+          _set((_thisSuper = _assertThisInitialized(_this25), _getPrototypeOf(MultipleChoiceQuestion.prototype)), "answer", [], _thisSuper, true);
 
-          return _this24;
+          return _this25;
         }
 
         _createClass(MultipleChoiceQuestion, [{
@@ -3859,11 +3948,11 @@
         _createClass(ConfirmDialogService, [{
           key: "openDialog",
           value: function openDialog(msg) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee33() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
               var isConfirmed, dialogRef;
-              return regeneratorRuntime.wrap(function _callee33$(_context33) {
+              return regeneratorRuntime.wrap(function _callee36$(_context37) {
                 while (1) {
-                  switch (_context33.prev = _context33.next) {
+                  switch (_context37.prev = _context37.next) {
                     case 0:
                       isConfirmed = false;
                       dialogRef = this.dialog.open(DialogTemplate, {
@@ -3871,20 +3960,20 @@
                           message: msg
                         }
                       });
-                      _context33.next = 4;
+                      _context37.next = 4;
                       return dialogRef.afterClosed().toPromise().then(function (result) {
                         isConfirmed = result;
                       });
 
                     case 4:
-                      return _context33.abrupt("return", isConfirmed);
+                      return _context37.abrupt("return", isConfirmed);
 
                     case 5:
                     case "end":
-                      return _context33.stop();
+                      return _context37.stop();
                   }
                 }
-              }, _callee33, this);
+              }, _callee36, this);
             }));
           }
         }]);
@@ -4356,19 +4445,19 @@
         _createClass(DashboardComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee34() {
-              return regeneratorRuntime.wrap(function _callee34$(_context34) {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
+              return regeneratorRuntime.wrap(function _callee37$(_context38) {
                 while (1) {
-                  switch (_context34.prev = _context34.next) {
+                  switch (_context38.prev = _context38.next) {
                     case 0:
                       this.studywrapper.study = undefined;
 
                     case 1:
                     case "end":
-                      return _context34.stop();
+                      return _context38.stop();
                   }
                 }
-              }, _callee34, this);
+              }, _callee37, this);
             }));
           }
           /**
@@ -4547,16 +4636,16 @@
         _createClass(KeyDataDao, [{
           key: "getFromUserId",
           value: function getFromUserId(userId) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee35() {
-              var _this25 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
+              var _this26 = this;
 
               var keyData;
-              return regeneratorRuntime.wrap(function _callee35$(_context35) {
+              return regeneratorRuntime.wrap(function _callee38$(_context39) {
                 while (1) {
-                  switch (_context35.prev = _context35.next) {
+                  switch (_context39.prev = _context39.next) {
                     case 0:
                       keyData = [];
-                      _context35.next = 3;
+                      _context39.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"].baseURL + "MyStudies/" + userId + "/", {
                         token: this.authService.getAuthToken()
                       }).toPromise().then(function (studiesResult) {
@@ -4566,7 +4655,7 @@
                         try {
                           for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
                             var element = _step4.value;
-                            keyData.push(new _KeyData__WEBPACK_IMPORTED_MODULE_2__["KeyData"](element.id, _this25.authService.getUser(), element.studyStatus, new _ShortDescription__WEBPACK_IMPORTED_MODULE_3__["ShortDescription"](element.shortDescription), element.fullDescription, element.isAmplitudeNecessary, element.name));
+                            keyData.push(new _KeyData__WEBPACK_IMPORTED_MODULE_2__["KeyData"](element.id, _this26.authService.getUser(), element.studyStatus, new _ShortDescription__WEBPACK_IMPORTED_MODULE_3__["ShortDescription"](element.shortDescription), element.fullDescription, element.isAmplitudeNecessary, element.name));
                           }
                         } catch (err) {
                           _iterator4.e(err);
@@ -4576,14 +4665,14 @@
                       });
 
                     case 3:
-                      return _context35.abrupt("return", keyData);
+                      return _context39.abrupt("return", keyData);
 
                     case 4:
                     case "end":
-                      return _context35.stop();
+                      return _context39.stop();
                   }
                 }
-              }, _callee35, this);
+              }, _callee38, this);
             }));
           }
           /**
@@ -4594,14 +4683,14 @@
         }, {
           key: "getParticipated",
           value: function getParticipated(userId) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee36() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
               var result;
-              return regeneratorRuntime.wrap(function _callee36$(_context36) {
+              return regeneratorRuntime.wrap(function _callee39$(_context40) {
                 while (1) {
-                  switch (_context36.prev = _context36.next) {
+                  switch (_context40.prev = _context40.next) {
                     case 0:
                       result = [];
-                      _context36.next = 3;
+                      _context40.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"].baseURL + "ParticipatedStudies/" + userId + "/", {
                         token: this.authService.getAuthToken()
                       }).toPromise().then(function (keyDatas) {
@@ -4621,14 +4710,14 @@
                       });
 
                     case 3:
-                      return _context36.abrupt("return", result);
+                      return _context40.abrupt("return", result);
 
                     case 4:
                     case "end":
-                      return _context36.stop();
+                      return _context40.stop();
                   }
                 }
-              }, _callee36, this);
+              }, _callee39, this);
             }));
           }
           /**
@@ -4640,14 +4729,14 @@
         }, {
           key: "getAvailableStudies",
           value: function getAvailableStudies(userId, hasAmplitude) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee37() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee40() {
               var result;
-              return regeneratorRuntime.wrap(function _callee37$(_context37) {
+              return regeneratorRuntime.wrap(function _callee40$(_context41) {
                 while (1) {
-                  switch (_context37.prev = _context37.next) {
+                  switch (_context41.prev = _context41.next) {
                     case 0:
                       result = [];
-                      _context37.next = 3;
+                      _context41.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"].baseURL + "AvailableStudies/?userId=" + userId + "&hasAmplitude=" + hasAmplitude, {
                         token: this.authService.getAuthToken()
                       }).toPromise().then(function (availableResult) {
@@ -4667,14 +4756,14 @@
                       });
 
                     case 3:
-                      return _context37.abrupt("return", result);
+                      return _context41.abrupt("return", result);
 
                     case 4:
                     case "end":
-                      return _context37.stop();
+                      return _context41.stop();
                   }
                 }
-              }, _callee37, this);
+              }, _callee40, this);
             }));
           }
           /**
@@ -4686,14 +4775,14 @@
         }, {
           key: "updateStudyState",
           value: function updateStudyState(id, state) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee38() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
               var result;
-              return regeneratorRuntime.wrap(function _callee38$(_context38) {
+              return regeneratorRuntime.wrap(function _callee41$(_context42) {
                 while (1) {
-                  switch (_context38.prev = _context38.next) {
+                  switch (_context42.prev = _context42.next) {
                     case 0:
                       result = false;
-                      _context38.next = 3;
+                      _context42.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"].baseURL + "UpdateStudyState/" + id + "/", {
                         token: this.authService.getAuthToken(),
                         state: state
@@ -4704,14 +4793,14 @@
                       });
 
                     case 3:
-                      return _context38.abrupt("return", result);
+                      return _context42.abrupt("return", result);
 
                     case 4:
                     case "end":
-                      return _context38.stop();
+                      return _context42.stop();
                   }
                 }
-              }, _callee38, this);
+              }, _callee41, this);
             }));
           }
           /**
@@ -4722,14 +4811,14 @@
         }, {
           key: "delete",
           value: function _delete(id) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee39() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee42() {
               var success;
-              return regeneratorRuntime.wrap(function _callee39$(_context39) {
+              return regeneratorRuntime.wrap(function _callee42$(_context43) {
                 while (1) {
-                  switch (_context39.prev = _context39.next) {
+                  switch (_context43.prev = _context43.next) {
                     case 0:
                       success = false;
-                      _context39.next = 3;
+                      _context43.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_6__["AppSettings"].baseURL + "DeleteStudy/" + id + "/", {
                         token: this.authService.getAuthToken(),
                         id: id
@@ -4740,14 +4829,14 @@
                       });
 
                     case 3:
-                      return _context39.abrupt("return", success);
+                      return _context43.abrupt("return", success);
 
                     case 4:
                     case "end":
-                      return _context39.stop();
+                      return _context43.stop();
                   }
                 }
-              }, _callee39, this);
+              }, _callee42, this);
             }));
           }
         }]);
@@ -5123,19 +5212,19 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function LinearScaleQuestion(id, name, questionText, displayName, numberOfChoices, leftLabel, rightLabel) {
-          var _thisSuper2, _this26;
+          var _thisSuper2, _this27;
 
           _classCallCheck(this, LinearScaleQuestion);
 
-          _this26 = _super6.call(this, id, name, questionText, displayName);
-          _this26.objectType = "LinearScaleQuestion";
-          _this26._numberOfChoices = numberOfChoices;
-          _this26._leftLabel = leftLabel;
-          _this26._rightLabel = rightLabel;
+          _this27 = _super6.call(this, id, name, questionText, displayName);
+          _this27.objectType = "LinearScaleQuestion";
+          _this27._numberOfChoices = numberOfChoices;
+          _this27._leftLabel = leftLabel;
+          _this27._rightLabel = rightLabel;
 
-          _set((_thisSuper2 = _assertThisInitialized(_this26), _getPrototypeOf(LinearScaleQuestion.prototype)), "answer", -1, _thisSuper2, true);
+          _set((_thisSuper2 = _assertThisInitialized(_this27), _getPrototypeOf(LinearScaleQuestion.prototype)), "answer", -1, _thisSuper2, true);
 
-          return _this26;
+          return _this27;
         }
 
         _createClass(LinearScaleQuestion, [{
@@ -5817,21 +5906,21 @@
         _createClass(AuthGuardService, [{
           key: "canActivate",
           value: function canActivate(route, state) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee40() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee43() {
               var isAuthenticated;
-              return regeneratorRuntime.wrap(function _callee40$(_context40) {
+              return regeneratorRuntime.wrap(function _callee43$(_context44) {
                 while (1) {
-                  switch (_context40.prev = _context40.next) {
+                  switch (_context44.prev = _context44.next) {
                     case 0:
                       isAuthenticated = false;
-                      _context40.next = 3;
+                      _context44.next = 3;
                       return this.authService.isAuthenticated().then(function (result) {
                         return isAuthenticated = result;
                       });
 
                     case 3:
                       if (isAuthenticated) {
-                        _context40.next = 9;
+                        _context44.next = 9;
                         break;
                       }
 
@@ -5839,17 +5928,17 @@
                         replaceUrl: true
                       });
                       this.authService.clear();
-                      return _context40.abrupt("return", isAuthenticated);
+                      return _context44.abrupt("return", isAuthenticated);
 
                     case 9:
-                      return _context40.abrupt("return", isAuthenticated);
+                      return _context44.abrupt("return", isAuthenticated);
 
                     case 10:
                     case "end":
-                      return _context40.stop();
+                      return _context44.stop();
                   }
                 }
-              }, _callee40, this);
+              }, _callee43, this);
             }));
           }
         }]);
@@ -6383,34 +6472,34 @@
         }, {
           key: "save",
           value: function save() {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee41() {
-              var _this27 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee44() {
+              var _this28 = this;
 
-              return regeneratorRuntime.wrap(function _callee41$(_context41) {
+              return regeneratorRuntime.wrap(function _callee44$(_context45) {
                 while (1) {
-                  switch (_context41.prev = _context41.next) {
+                  switch (_context45.prev = _context45.next) {
                     case 0:
                       if (this.saving) {
-                        _context41.next = 4;
+                        _context45.next = 4;
                         break;
                       }
 
                       this.saving = true;
-                      _context41.next = 4;
+                      _context45.next = 4;
                       return this.studyService.save(this.studywrapper.study).then(function (result) {
                         if (result) {
                           setTimeout(function () {
-                            _this27.saving = false;
+                            _this28.saving = false;
                           }, 1000);
                         }
                       });
 
                     case 4:
                     case "end":
-                      return _context41.stop();
+                      return _context45.stop();
                   }
                 }
-              }, _callee41, this);
+              }, _callee44, this);
             }));
           }
         }]);
@@ -6592,14 +6681,14 @@
         _createClass(AlertService, [{
           key: "alert",
           value: function alert(message) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee42() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee45() {
               var result;
-              return regeneratorRuntime.wrap(function _callee42$(_context42) {
+              return regeneratorRuntime.wrap(function _callee45$(_context46) {
                 while (1) {
-                  switch (_context42.prev = _context42.next) {
+                  switch (_context46.prev = _context46.next) {
                     case 0:
                       result = false;
-                      _context42.next = 3;
+                      _context46.next = 3;
                       return this.snackBar.open(message, "Ok", {
                         panelClass: "snackbar-style"
                       }).afterDismissed().toPromise().then(function (response) {
@@ -6609,14 +6698,14 @@
                       });
 
                     case 3:
-                      return _context42.abrupt("return", result);
+                      return _context46.abrupt("return", result);
 
                     case 4:
                     case "end":
-                      return _context42.stop();
+                      return _context46.stop();
                   }
                 }
-              }, _callee42, this);
+              }, _callee45, this);
             }));
           }
         }]);
@@ -6682,18 +6771,18 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function DateQuestion(id, name, questionText, displayName, start, end) {
-          var _thisSuper3, _this28;
+          var _thisSuper3, _this29;
 
           _classCallCheck(this, DateQuestion);
 
-          _this28 = _super8.call(this, id, name, questionText, displayName);
-          _this28.objectType = "DateQuestion";
-          _this28.start = start;
-          _this28.end = end;
+          _this29 = _super8.call(this, id, name, questionText, displayName);
+          _this29.objectType = "DateQuestion";
+          _this29.start = start;
+          _this29.end = end;
 
-          _set((_thisSuper3 = _assertThisInitialized(_this28), _getPrototypeOf(DateQuestion.prototype)), "answer", "", _thisSuper3, true);
+          _set((_thisSuper3 = _assertThisInitialized(_this29), _getPrototypeOf(DateQuestion.prototype)), "answer", "", _thisSuper3, true);
 
-          return _this28;
+          return _this29;
         }
 
         _createClass(DateQuestion, [{
@@ -6951,13 +7040,13 @@
         _createClass(StudyPrototypeDAO, [{
           key: "get",
           value: function get(id) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee43() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
               var study;
-              return regeneratorRuntime.wrap(function _callee43$(_context43) {
+              return regeneratorRuntime.wrap(function _callee46$(_context47) {
                 while (1) {
-                  switch (_context43.prev = _context43.next) {
+                  switch (_context47.prev = _context47.next) {
                     case 0:
-                      _context43.next = 2;
+                      _context47.next = 2;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_18__["AppSettings"].baseURL + "StudyNew/" + id + "/", {
                         token: this.authService.getAuthToken()
                       }).toPromise().then(function (studyResult) {
@@ -7147,14 +7236,14 @@
                       });
 
                     case 2:
-                      return _context43.abrupt("return", study);
+                      return _context47.abrupt("return", study);
 
                     case 3:
                     case "end":
-                      return _context43.stop();
+                      return _context47.stop();
                   }
                 }
-              }, _callee43, this);
+              }, _callee46, this);
             }));
           }
           /**
@@ -7165,14 +7254,14 @@
         }, {
           key: "save",
           value: function save(study) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee44() {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee47() {
               var id;
-              return regeneratorRuntime.wrap(function _callee44$(_context44) {
+              return regeneratorRuntime.wrap(function _callee47$(_context48) {
                 while (1) {
-                  switch (_context44.prev = _context44.next) {
+                  switch (_context48.prev = _context48.next) {
                     case 0:
                       id = -1;
-                      _context44.next = 3;
+                      _context48.next = 3;
                       return this.http.post(_src_app_app_settings__WEBPACK_IMPORTED_MODULE_18__["AppSettings"].baseURL + "SaveStudy/", {
                         study: study,
                         token: this.authService.getAuthToken()
@@ -7183,14 +7272,14 @@
                       });
 
                     case 3:
-                      return _context44.abrupt("return", id);
+                      return _context48.abrupt("return", id);
 
                     case 4:
                     case "end":
-                      return _context44.stop();
+                      return _context48.stop();
                   }
                 }
-              }, _callee44, this);
+              }, _callee47, this);
             }));
           }
           /**
@@ -7201,23 +7290,23 @@
         }, {
           key: "update",
           value: function update(object) {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee45() {
-              return regeneratorRuntime.wrap(function _callee45$(_context45) {
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee48() {
+              return regeneratorRuntime.wrap(function _callee48$(_context49) {
                 while (1) {
-                  switch (_context45.prev = _context45.next) {
+                  switch (_context49.prev = _context49.next) {
                     case 0:
-                      _context45.next = 2;
+                      _context49.next = 2;
                       return this.save(object);
 
                     case 2:
-                      return _context45.abrupt("return", true);
+                      return _context49.abrupt("return", true);
 
                     case 3:
                     case "end":
-                      return _context45.stop();
+                      return _context49.stop();
                   }
                 }
-              }, _callee45, this);
+              }, _callee48, this);
             }));
           }
         }]);
@@ -7550,13 +7639,13 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function QualificationQuestion(id, name, questionText, displayName, requiredAnswer) {
-          var _this29;
+          var _this30;
 
           _classCallCheck(this, QualificationQuestion);
 
-          _this29 = _super9.call(this, id, name, questionText, displayName);
-          _this29.requiredAnswer = requiredAnswer;
-          return _this29;
+          _this30 = _super9.call(this, id, name, questionText, displayName);
+          _this30.requiredAnswer = requiredAnswer;
+          return _this30;
         }
 
         _createClass(QualificationQuestion, [{
@@ -7750,17 +7839,17 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function TextQuestion(id, name, questionText, displayName, length) {
-          var _thisSuper4, _this30;
+          var _thisSuper4, _this31;
 
           _classCallCheck(this, TextQuestion);
 
-          _this30 = _super10.call(this, id, name, questionText, displayName);
-          _this30.objectType = "TextQuestion";
-          _this30.length = length;
+          _this31 = _super10.call(this, id, name, questionText, displayName);
+          _this31.objectType = "TextQuestion";
+          _this31.length = length;
 
-          _set((_thisSuper4 = _assertThisInitialized(_this30), _getPrototypeOf(TextQuestion.prototype)), "answer", "", _thisSuper4, true);
+          _set((_thisSuper4 = _assertThisInitialized(_this31), _getPrototypeOf(TextQuestion.prototype)), "answer", "", _thisSuper4, true);
 
-          return _this30;
+          return _this31;
         }
 
         _createClass(TextQuestion, [{
@@ -8035,14 +8124,14 @@
          * Position von Studieninstanz zu Studieninstanz mit Hilfe von Randomisierung variiert
          */
         function VibrationPattern(id, name, displayName) {
-          var _this31;
+          var _this32;
 
           _classCallCheck(this, VibrationPattern);
 
-          _this31 = _super11.call(this, id, name, displayName);
-          _this31.objectType = "VibrationPattern";
-          _this31.vibrationPatternElements = [];
-          return _this31;
+          _this32 = _super11.call(this, id, name, displayName);
+          _this32.objectType = "VibrationPattern";
+          _this32.vibrationPatternElements = [];
+          return _this32;
         }
 
         _createClass(VibrationPattern, [{
@@ -8272,33 +8361,33 @@
         }, {
           key: "login",
           value: function login() {
-            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee46() {
-              var _this32 = this;
+            return __awaiter(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee49() {
+              var _this33 = this;
 
-              return regeneratorRuntime.wrap(function _callee46$(_context46) {
+              return regeneratorRuntime.wrap(function _callee49$(_context50) {
                 while (1) {
-                  switch (_context46.prev = _context46.next) {
+                  switch (_context50.prev = _context50.next) {
                     case 0:
                       if (!(this.email != "" && this.password != "" && this.email != undefined && this.password != undefined)) {
-                        _context46.next = 3;
+                        _context50.next = 3;
                         break;
                       }
 
-                      _context46.next = 3;
+                      _context50.next = 3;
                       return this.authService.login(this.email, this.password).then(function (result) {
                         if (result) {
-                          _this32.toDashboard();
+                          _this33.toDashboard();
                         } else {
-                          _this32.alertService.alert("Anmeldung fehlgeschlagen. Überprüfe die eingegebene E-Mail und das Passwort.");
+                          _this33.alertService.alert("Anmeldung fehlgeschlagen. Überprüfe die eingegebene E-Mail und das Passwort.");
                         }
                       });
 
                     case 3:
                     case "end":
-                      return _context46.stop();
+                      return _context50.stop();
                   }
                 }
-              }, _callee46, this);
+              }, _callee49, this);
             }));
           }
           /**
@@ -8827,16 +8916,16 @@
          * @param id ist die eindeutige Identifikationsnummer des Fragenobjekts
          */
         function AbstractQuestion(id, name, questionText, displayName) {
-          var _this33;
+          var _this34;
 
           _classCallCheck(this, AbstractQuestion);
 
-          _this33 = _super12.call(this, id, name, displayName);
-          _this33._questionText = "";
-          _this33.questionText = questionText;
-          _this33._answer = undefined;
-          _this33.displayName = displayName;
-          return _this33;
+          _this34 = _super12.call(this, id, name, displayName);
+          _this34._questionText = "";
+          _this34.questionText = questionText;
+          _this34._answer = undefined;
+          _this34.displayName = displayName;
+          return _this34;
         }
 
         _createClass(AbstractQuestion, [{
